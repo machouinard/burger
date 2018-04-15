@@ -14,7 +14,7 @@ const burger = props => {
 		}, []);
 
 	if ( 0 === newIngredients.length ) {
-		newIngredients = <p>Start building your Burger!</p>
+		newIngredients = <p>Where's the beef!</p>
 	}
 	console.log( 'ingredients', newIngredients );
 
