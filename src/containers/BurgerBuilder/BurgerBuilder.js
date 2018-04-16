@@ -94,13 +94,17 @@ class BurgerBuilder extends Component {
 
 	}
 
-	cancelOrderHandler = ( event ) => {
-
-		console.log( event.target );
+	cancelOrderHandler = event => {
 
 		this.setState( {
 			               ordered: false
 		               } );
+	};
+
+	orderContinueHandler = event => {
+
+		alert( 'Enjoy' );
+
 	};
 
 	render() {
@@ -121,6 +125,9 @@ class BurgerBuilder extends Component {
 				>
 					<OrderSummary
 						ingredients={ this.state.ingredients }
+						cancelled={ this.cancelOrderHandler }
+						orderContinue={ this.orderContinueHandler }
+						price={this.state.totalPrice}
 					/>
 				</Modal>
 				<Burger ingredients={ this.state.ingredients }/>
