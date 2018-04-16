@@ -14,11 +14,6 @@ const ING_PRICES = {
 
 class BurgerBuilder extends Component {
 
-	constructor() {
-		super();
-		this.orderHandler = this.orderHandler.bind( this );
-	}
-
 	state = {
 		ingredients: {
 			salad:  0,
@@ -27,8 +22,8 @@ class BurgerBuilder extends Component {
 			meat:   0
 		},
 		totalPrice:  4,
-		buyable: false,
-		ordered: false
+		buyable:     false,
+		ordered:     false
 	};
 
 	addIngredientHandler = type => {
@@ -53,7 +48,7 @@ class BurgerBuilder extends Component {
 
 	removeIngredientHandler = type => {
 
-		const oldCount           = this.state.ingredients[ type ];
+		const oldCount = this.state.ingredients[ type ];
 
 		if ( oldCount < 1 ) {
 			return;
@@ -65,8 +60,8 @@ class BurgerBuilder extends Component {
 		updatedIngredients[ type ] = newCount;
 
 		const priceSubtracted = ING_PRICES[ type ];
-		const oldPrice   = this.state.totalPrice;
-		const newPrice   = oldPrice - priceSubtracted;
+		const oldPrice        = this.state.totalPrice;
+		const newPrice        = oldPrice - priceSubtracted;
 
 		this.setState( {
 			               ingredients: updatedIngredients,
@@ -80,24 +75,33 @@ class BurgerBuilder extends Component {
 	updateBuyable( ingredients ) {
 
 		const total = Object.keys( ingredients ).map( key => {
-			return ingredients[key];
-		} ).reduce( (sum, el ) => {
+			return ingredients[ key ];
+		} ).reduce( ( sum, el ) => {
 			return sum + el;
 		}, 0 );
 
 		this.setState( {
-			buyable: total > 0
+			               buyable: total > 0
 		               } );
 
 	}
 
-	orderHandler () {
+	orderHandler = () => {
 
 		this.setState( {
-			ordered: true
+			               ordered: true
 		               } );
 
 	}
+
+	cancelOrderHandler = ( event ) => {
+
+		console.log( event.target );
+
+		this.setState( {
+			               ordered: false
+		               } );
+	};
 
 	render() {
 
@@ -106,20 +110,27 @@ class BurgerBuilder extends Component {
 		};
 
 		for ( let key in disabled ) {
-			disabled[key] = disabled < 1
+			disabled[ key ] = disabled < 1
 		}
 
 		return (
 			<Aux>
-				<Modal show={this.state.ordered}><OrderSummary ingredients={this.state.ingredients} /></Modal>
+				<Modal
+					show={ this.state.ordered }
+					cancel={ this.cancelOrderHandler }
+				>
+					<OrderSummary
+						ingredients={ this.state.ingredients }
+					/>
+				</Modal>
 				<Burger ingredients={ this.state.ingredients }/>
 				<BuildControls
-					price={this.state.totalPrice}
-					disabled={disabled}
-					ingredientAdded={this.addIngredientHandler}
-					ingredientRemoved={this.removeIngredientHandler}
-					buyable={this.state.buyable}
-					ordered={this.orderHandler}
+					price={ this.state.totalPrice }
+					disabled={ disabled }
+					ingredientAdded={ this.addIngredientHandler }
+					ingredientRemoved={ this.removeIngredientHandler }
+					buyable={ this.state.buyable }
+					ordered={ this.orderHandler }
 				/>
 			</Aux>
 		);
