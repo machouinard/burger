@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Aux from '../../../hoc/Aux';
+import Aux from '../../../hoc/Aux/Aux';
 import Button from '../../../components/UI/Button/Button';
 
 class OrderSummary extends Component {
@@ -10,22 +10,23 @@ class OrderSummary extends Component {
 
 	}
 
-	ingredientSummary = Object.keys( this.props.ingredients )
-	                          .map( key => {
-		                          return <li key={ key }>
-			                                <span
-				                                style={ { textTransform: 'capitalize' } }>{ key }</span>: { this.props.ingredients[ key ] }
-		                          </li>
-	                          } );
 
 	render() {
+
+		const ingredientSummary = Object.keys( this.props.ingredients )
+		                                .map( key => {
+			                                return <li key={ key }>
+			                                <span
+				                                style={ { textTransform: 'capitalize' } }>{ key }</span>: { this.props.ingredients[ key ] }
+			                                </li>
+		                                } );
 
 		return (
 			<Aux>
 				<h3>Your Order</h3>
 				<p>Your Ingredients</p>
 				<ul>
-					{ this.ingredientSummary }
+					{ ingredientSummary }
 				</ul>
 				<p><strong>Total Price: ${ this.props.price.toFixed( 2 ) }</strong></p>
 				<p>Checkout?</p>
