@@ -16,7 +16,6 @@ const burger = props => {
 	if ( 0 === newIngredients.length ) {
 		newIngredients = <p>Where's the beef!</p>
 	}
-	console.log( 'ingredients', newIngredients );
 
 	return (
 		<div className={ classes.Burger }>

@@ -7,11 +7,10 @@ import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
 class Layout extends Component {
 
 	state = {
-		showSideDrawer: true
+		showSideDrawer: false
 	};
 
 	sideDrawerCloseHandler = () => {
-		console.log( 'asdfasdf' );
 		this.setState( { showSideDrawer: false } );
 	};
 
