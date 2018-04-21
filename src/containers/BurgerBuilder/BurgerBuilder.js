@@ -5,6 +5,8 @@ import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-orders';
+import Spinner from '../../components/UI/Spinner/Spinner';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 const ING_PRICES = {
 	salad:  0.5,
@@ -24,7 +26,8 @@ class BurgerBuilder extends Component {
 		},
 		totalPrice:  4,
 		buyable:     false,
-		ordered:     false
+		ordered:     false,
+		loading:     false
 	};
 
 	addIngredientHandler = type => {
@@ -106,6 +109,8 @@ class BurgerBuilder extends Component {
 
 		//alert( 'Enjoy' );
 
+		this.setState( { loading: true } );
+
 		const order = {
 			ingredients:    this.state.ingredients,
 			price:          this.state.totalPrice,
@@ -125,9 +130,11 @@ class BurgerBuilder extends Component {
 		axios.post( '/orders.json', order )
 		     .then( resp => {
 			     console.log( resp );
+			     this.setState( { loading: false, ordered: false } );
 		     } )
 		     .catch( error => {
 			     console.log( error );
+			     this.setState( { loading: false, ordered: false } );
 		     } );
 
 	};
@@ -142,18 +149,26 @@ class BurgerBuilder extends Component {
 			disabled[ key ] = disabled < 1
 		}
 
+		let orderSummary = <OrderSummary
+			ingredients={ this.state.ingredients }
+			cancelled={ this.cancelOrderHandler }
+			orderContinue={ this.orderContinueHandler }
+			price={ this.state.totalPrice }
+		/>;
+
+		if ( this.state.loading ) {
+
+			orderSummary = <Spinner />
+
+		}
+
 		return (
 			<Aux>
 				<Modal
 					show={ this.state.ordered }
 					cancel={ this.cancelOrderHandler }
 				>
-					<OrderSummary
-						ingredients={ this.state.ingredients }
-						cancelled={ this.cancelOrderHandler }
-						orderContinue={ this.orderContinueHandler }
-						price={ this.state.totalPrice }
-					/>
+					{ orderSummary }
 				</Modal>
 				<Burger ingredients={ this.state.ingredients }/>
 				<BuildControls
@@ -171,4 +186,4 @@ class BurgerBuilder extends Component {
 
 }
 
-export default BurgerBuilder;
+export default withErrorHandler( BurgerBuilder, axios );
