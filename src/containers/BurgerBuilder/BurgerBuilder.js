@@ -20,13 +20,16 @@ class BurgerBuilder extends Component {
 	state = {
 		ingredients: null,
 		totalPrice:  4,
-		buyable:     false,
+		buyable:     true,
 		ordered:     false,
 		loading:     false,
 		error:       false
 	};
 
 	componentDidMount() {
+
+		//console.log( this.props );
+
 		axios.get( 'https://chouinard-burger.firebaseio.com/ingredients.json' ).then( resp => {
 			this.setState( { ingredients: resp.data } );
 		} ).catch( error => {
@@ -116,31 +119,44 @@ class BurgerBuilder extends Component {
 
 		this.setState( { loading: true } );
 
-		const order = {
-			ingredients:    this.state.ingredients,
-			price:          this.state.totalPrice,
-			customer:       {
-				name:    'Chouinard',
-				address: {
-					street: '42nd st',
-					city:   'Sacramento',
-					state:  'CA',
-					zip:    '95819'
-				},
-				email:   'test@test.com'
-			},
-			deliverymethod: 'cheapest'
-		};
+		//const order = {
+		//	ingredients:    this.state.ingredients,
+		//	price:          this.state.totalPrice,
+		//	customer:       {
+		//		name:    'Chouinard',
+		//		address: {
+		//			street: '42nd st',
+		//			city:   'Sacramento',
+		//			state:  'CA',
+		//			zip:    '95819'
+		//		},
+		//		email:   'test@test.com'
+		//	},
+		//	deliverymethod: 'cheapest'
+		//};
+		//
+		//axios.post( '/orders.json', order )
+		//     .then( resp => {
+		//	     console.log( resp );
+		//	     this.setState( { loading: false, ordered: false } );
+		//     } )
+		//     .catch( error => {
+		//	     console.log( error );
+		//	     this.setState( { loading: false, ordered: false } );
+		//     } );
 
-		axios.post( '/orders.json', order )
-		     .then( resp => {
-			     console.log( resp );
-			     this.setState( { loading: false, ordered: false } );
-		     } )
-		     .catch( error => {
-			     console.log( error );
-			     this.setState( { loading: false, ordered: false } );
-		     } );
+		const queryParams = [];
+
+		for ( let i in this.state.ingredients ) {
+			queryParams.push( encodeURIComponent( i ) + '=' + encodeURIComponent( this.state.ingredients[i] ) );
+		}
+
+		const queryString = queryParams.join( '&' );
+
+		this.props.history.push( {
+			pathname: '/checkout',
+			search: '?' + queryString
+		                         } );
 
 	};
 
