@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
+import { Route } from 'react-router-dom';
+import ContactData from '../../containers/Checkout/ContactData/ContactData';
 
 class Checkout extends Component {
 	state = {
@@ -9,18 +11,18 @@ class Checkout extends Component {
 			meat:   1,
 			salad:  2
 		}
-};
+	};
 
 	componentDidMount() {
 		const query = new URLSearchParams( this.props.location.search );
 		console.log( 'query', query );
 		const ingredients = {};
 		for ( let param of query.entries() ) {
-			ingredients[ param[0]] = +param[1];
+			ingredients[ param[ 0 ] ] = + param[ 1 ];
 		}
 
 		this.setState( {
-			ingredients: ingredients
+			               ingredients: ingredients
 		               } );
 
 	}
@@ -33,20 +35,20 @@ class Checkout extends Component {
 		this.props.history.push( '/checkout/contact-data' );
 	}
 
-render()
-{
+	render() {
 
-	return (
-		<div>
-			<CheckoutSummary
-				ingredients={ this.state.ingredients }
-				checkoutCancelled={ this.checkoutCancelledHandler }
-				checkoutContinue={ this.checkoutContinueHandler }
-			/>
-		</div>
-	)
+		return (
+			<div>
+				<CheckoutSummary
+					ingredients={ this.state.ingredients }
+					checkoutCancelled={ this.checkoutCancelledHandler }
+					checkoutContinue={ this.checkoutContinueHandler }
+				/>
+				<Route path={ this.props.match.path + '/contact-data' } component={ ContactData }/>
+			</div>
+		)
 
-}
+	}
 
 }
 
