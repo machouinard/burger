@@ -5,7 +5,7 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 class Orders extends Component {
 	state = {
-		orders:  {},
+		orders:  [],
 		loading: true
 	};
 
@@ -31,10 +31,16 @@ class Orders extends Component {
 
 	render() {
 
+
 		return (
 			<div>
-				<Order/>
-				<Order/>
+				{ this.state.orders.map( order => {
+					return <Order
+						key={order.id}
+						ingredients={ order.ingredients }
+						price={ order.price }
+					/>
+				})}
 			</div>
 		);
 
