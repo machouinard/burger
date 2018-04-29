@@ -228,7 +228,9 @@ class ContactData extends Component {
 		);
 
 		if ( this.state.loading ) {
+
 			form = <Spinner/>
+			
 		}
 
 		return (
@@ -242,10 +244,12 @@ class ContactData extends Component {
 }
 
 const mapStateToProps = state => {
+
 	return {
 		ings: state.ingredients,
 		price: state.totalPrice
 	}
+
 };
 
 export default connect( mapStateToProps )( ContactData );
