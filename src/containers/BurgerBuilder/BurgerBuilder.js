@@ -14,21 +14,15 @@ import * as builderActions from '../../store/actions/index';
 class BurgerBuilder extends Component {
 
 	state = {
-		ordered: false,
-		loading: false,
-		error:   false
+		ordered: false
 	};
 
 	componentDidMount() {
 
 		//console.log( this.props );
 
-		//axios.get( 'https://chouinard-burger.firebaseio.com/ingredients.json' ).then( resp => {
-		//	this.setState( { ingredients: resp.data } );
-		//} ).catch( error => {
-		//	console.log( error );
-		//	this.setState( { error: true } );
-		//} );
+		this.props.onInitIngredients();
+
 	}
 
 	updateBuyable() {
@@ -91,13 +85,7 @@ class BurgerBuilder extends Component {
 
 		}
 
-		if ( this.state.loading ) {
-
-			orderSummary = <Spinner/>
-
-		}
-
-		let burger = this.state.error ? <p>ERROR</p> : <Spinner/>;
+		let burger = this.props.error ? <p>ERROR</p> : <Spinner/>;
 
 		if ( this.props.ings ) {
 
@@ -135,14 +123,16 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
 	return {
 		ings:       state.ingredients,
-		totalPrice: state.totalPrice
+		totalPrice: state.totalPrice,
+		error:      state.error
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
 		onIngredientAdd:    ( name ) => dispatch( builderActions.addIngredient( name ) ),
-		onIngredientRemove: ( name ) => dispatch( builderActions.removeIngredient( name ) )
+		onIngredientRemove: ( name ) => dispatch( builderActions.removeIngredient( name ) ),
+		onInitIngredients: () => dispatch( builderActions.initIngredients() )
 
 	}
 };
