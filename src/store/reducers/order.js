@@ -9,7 +9,7 @@ const reducer = ( state = initialState, action ) => {
 	switch ( action.type ) {
 		case actionTypes.BUY_BURGER_START:
 			return {
-				...start,
+				...state,
 				loading: true
 			};
 		case actionTypes.BUY_BURGER_SUCCESS:
