@@ -153,7 +153,7 @@ class ContactData extends Component {
 
 		}
 
-		return isValid
+		return isValid;
 
 	}
 
