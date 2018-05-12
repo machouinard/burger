@@ -36,7 +36,8 @@ class Auth extends Component {
 				valid:         false,
 				touched:       false
 			}
-		}
+		},
+		isSignup: true
 	};
 
 	validateFormField( value, rules ) {
@@ -69,7 +70,7 @@ class Auth extends Component {
 
 			const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 
-			isValid       = pattern.test( value ) && isValid;
+			isValid = pattern.test( value ) && isValid;
 
 		}
 
@@ -77,8 +78,8 @@ class Auth extends Component {
 
 			const pattern = /^\d+$/;
 
-			isValid       = pattern.test( value ) && isValid;
-			
+			isValid = pattern.test( value ) && isValid;
+
 		}
 
 		return isValid;
@@ -107,7 +108,17 @@ class Auth extends Component {
 
 		event.preventDefault();
 
-		this.props.onAuth( this.state.controls.email.value, this.state.controls.password.value );
+		this.props.onAuth( this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup );
+
+	};
+
+	switchAuthModeHandler = () => {
+
+		this.setState( prevState => {
+
+			return { isSignup: ! prevState.isSignup };
+
+		} );
 
 	};
 
@@ -143,6 +154,12 @@ class Auth extends Component {
 					{ form }
 					<Button buttonType="Success">Submit</Button>
 				</form>
+				<Button
+					buttonType="Danger"
+					clicked={ this.switchAuthModeHandler }
+				>
+					Switch to { this.state.isSignup ? 'Sign in' : 'Sign up' }
+				</Button>
 			</div>
 		);
 	}
@@ -152,7 +169,7 @@ class Auth extends Component {
 const mapDispatchToProps = dispatch => {
 
 	return {
-		onAuth: ( email, password ) => dispatch( actions.auth( email, password ) )
+		onAuth: ( email, password, isSignup ) => dispatch( actions.auth( email, password, isSignup ) )
 	}
 };
 
