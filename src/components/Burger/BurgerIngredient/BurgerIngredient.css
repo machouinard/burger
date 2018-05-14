@@ -82,7 +82,7 @@
 
 
 .Meat {
-    width: 80%;
+    width: 85%;
     height: 8%;
     background: linear-gradient(#7f3608, #702e05);
     margin: 2% auto;
@@ -110,4 +110,19 @@
     height: 3%;
     background: linear-gradient(#bf3813, #c45e38);
     margin: 2% auto;
+}
+
+.Onion {
+    width: 80%;
+    height: 3%;
+    background: linear-gradient(#900fad, #ddaee8 );
+    margin: 2% auto;
+}
+
+.Pickle {
+    width: 85%;
+    height: 7%;
+    background: linear-gradient(#11560e, #b9f9b6);
+    margin: 2% auto;
+    border-radius: 90% 90% 0 0;
 }
