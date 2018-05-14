@@ -77,7 +77,7 @@ class BurgerBuilder extends Component {
 		};
 
 		for ( let key in disabled ) {
-			disabled[ key ] = disabled < 1
+			disabled[ key ] = disabled[ key ] < 1
 		}
 
 		let orderSummary = null;
