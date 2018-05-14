@@ -12,7 +12,9 @@ const ING_PRICES    = {
 	lettuce: 0.5,
 	cheese:  0.6,
 	bacon:   0.25,
-	meat:    0.5
+	meat:    0.5,
+	onion:   0.25,
+	pickle:  0.40
 };
 const addIngredient = ( state, action ) => {
 	const updatedIngredient  = { [ action.ingredientName ]: state.ingredients[ action.ingredientName ] + 1 }
@@ -40,7 +42,9 @@ const setIngredients = ( state, action ) => {
 	return updateObject( state, {
 		ingredients: {
 			lettuce: action.ingredients.lettuce,
+			onion:   action.ingredients.onion,
 			bacon:   action.ingredients.bacon,
+			pickle:  action.ingredients.pickle,
 			cheese:  action.ingredients.cheese,
 			meat:    action.ingredients.meat
 		},
