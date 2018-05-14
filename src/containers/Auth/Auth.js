@@ -6,7 +6,7 @@ import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import classes from './Auth.css';
 import * as actions from '../../store/actions/index';
-import { auth } from "../../store/actions";
+import { updateObject } from "../../shared/utility";
 
 class Auth extends Component {
 	state = {
@@ -101,15 +101,14 @@ class Auth extends Component {
 
 	inputChangedHandler = ( event, controlName ) => {
 
-		const updatedControls = {
-			...this.state.controls,
-			[ controlName ]: {
-				...this.state.controls[ controlName ],
+		const updatedControls = updateObject( this.state.controls, {
+			[ controlName ]: updateObject( this.state.controls[ controlName ], {
 				value:   event.target.value,
 				valid:   this.validateFormField( event.target.value, this.state.controls[ controlName ].validation ),
-				touched: true,
-			}
-		};
+				touched: true
+			} )
+			
+		} );
 
 		this.setState( {
 			               controls: updatedControls
@@ -183,7 +182,7 @@ class Auth extends Component {
 
 		if ( this.props.isAuthenticated ) {
 
-			authRedirect = <Redirect to={ this.props.authRedirectPath } />
+			authRedirect = <Redirect to={ this.props.authRedirectPath }/>
 
 		}
 
@@ -210,9 +209,9 @@ class Auth extends Component {
 const mapStateToProps = state => {
 
 	return {
-		loading:         state.auth.loading,
-		error:           state.auth.error,
-		isAuthenticated: state.auth.token !== null,
+		loading:          state.auth.loading,
+		error:            state.auth.error,
+		isAuthenticated:  state.auth.token !== null,
 		buildingBurger:   state.burgerBuilder.building,
 		authRedirectPath: state.auth.authRedirectPath
 	};
@@ -222,8 +221,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 
 	return {
-		onAuth: ( email, password, isSignup ) => dispatch( actions.auth( email, password, isSignup ) ),
-		onSetAuthRedirectPath: ( ) => dispatch( actions.setAuthRedirectPath( '/' ) )
+		onAuth:                ( email, password, isSignup ) => dispatch( actions.auth( email, password, isSignup ) ),
+		onSetAuthRedirectPath: () => dispatch( actions.setAuthRedirectPath( '/' ) )
 	}
 };
 
