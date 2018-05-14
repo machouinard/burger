@@ -11,9 +11,9 @@ export const authStart = () => {
 export const authSuccess = ( token, userId ) => {
 
 	return {
-		type:     actionTypes.AUTH_SUCCESS,
+		type:    actionTypes.AUTH_SUCCESS,
 		idToken: token,
-		userId: userId
+		userId:  userId
 	};
 
 };
@@ -86,6 +86,15 @@ export const auth = ( email, password, isSignup ) => {
 
 		     } );
 
+	};
+
+};
+
+export const setAuthRedirectPath = path => {
+
+	return {
+		type: actionTypes.SET_AUTH_REDIRECT_PATH,
+		path: path
 	};
 
 };
