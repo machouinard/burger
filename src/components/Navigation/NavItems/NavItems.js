@@ -4,7 +4,6 @@ import NavItem from './NavItem/NavItem';
 
 const navItems = props => {
 
-	console.log( 'auth?', props.isAuthenticated );
 
 	return (
 
