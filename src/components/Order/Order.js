@@ -6,10 +6,16 @@ const order = props => {
 	const ingredients = [];
 
 	for ( let ingredName in props.ingredients ) {
-		ingredients.push( {
-			                  name:   ingredName,
-			                  amount: props.ingredients[ ingredName ]
-		                  } );
+
+		if ( 0 < props.ingredients[ ingredName ] ) {
+
+			ingredients.push( {
+				                  name:   ingredName,
+				                  amount: props.ingredients[ ingredName ]
+			                  } );
+
+		}
+
 	}
 
 	const ingredientList = ingredients.map( ingredient => {
