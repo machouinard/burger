@@ -4,11 +4,12 @@ import { updateObject } from '../../shared/utility';
 const initialState = {
 	orders:  [],
 	loading: false,
-	bought:  false
+	bought:  false,
+	date:    null
 };
 
 const buyInit = ( state, action ) => {
-	return updateObject( state, { bought: false } );
+	return updateObject( state, { bought: false, date: new Date() } );
 };
 
 const buyBurgerStart = ( state, action ) => {
@@ -20,12 +21,13 @@ const buyBurgerSuccess = ( state, action ) => {
 	return updateObject( state, {
 		loading: false,
 		bought:  true,
-		orders:  state.orders.concat( newOrder )
+		orders:  state.orders.concat( newOrder ),
+		date: null
 	} );
 };
 
 const buyBurgerFail = ( state, action ) => {
-	return updateObject( state, { loading: false } );
+	return updateObject( state, { loading: false, date: null } );
 };
 
 const fetchOrdersStart = ( state, action ) => {
