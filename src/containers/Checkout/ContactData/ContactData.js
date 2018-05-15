@@ -118,11 +118,14 @@ class ContactData extends Component {
 
 		//console.log( 'formData', formData );
 
+		console.log( 'this.props.orderDate ContactData', this.props.orderDate );
+
 		const order = {
 			ingredients: this.props.ings,
 			price:       this.props.price,
 			orderData:   formData,
-			userId: this.props.userId
+			userId: this.props.userId,
+			orderDate: this.props.orderDate
 		};
 
 		this.props.onOrderBurger( order, this.props.token );
@@ -206,12 +209,15 @@ class ContactData extends Component {
 
 const mapStateToProps = state => {
 
+	console.log( 'state.order.date ContactData', state.order.date );
+
 	return {
 		ings: state.burgerBuilder.ingredients,
 		price: state.burgerBuilder.totalPrice,
 		loading: state.order.loading,
 		token: state.auth.token,
-		userId: state.auth.userId
+		userId: state.auth.userId,
+		orderDate: state.order.date
 	}
 
 };

@@ -22,21 +22,30 @@ const order = props => {
 		return (
 			<span
 				key={ ingredient.name }
-				style={{
+				style={ {
 					textTransform: 'capitalize',
-					display: 'inline-block',
-					margin: '0 8px',
-					border: '1px solid #eee',
-					padding: '3px'
-				}}
+					display:       'inline-block',
+					margin:        '0 8px',
+					border:        '1px solid #eee',
+					padding:       '3px'
+				} }
 			>
 				{ ingredient.name } ({ ingredient.amount })
 			</span>
 		);
 	} );
 
+	let date = null;
+
+	if ( props.orderDate ) {
+
+		date = new Date( props.orderDate ).toString();
+
+	}
+
 	return (
 		<div className={ classes.Order }>
+			<p><strong>{ date }</strong></p>
 			<p>Ingredients: { ingredientList }</p>
 			<p>Price: <strong>${ Number.parseFloat( props.price ).toFixed( 2 ) }</strong></p>
 		</div>
